@@ -1,4 +1,4 @@
-/** Server startup for BizTime. */
+// Server startup for Data Company. 
 
 
 const app = require("./app");
