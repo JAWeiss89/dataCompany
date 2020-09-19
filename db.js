@@ -5,7 +5,7 @@ const { Client } = require("pg"); // What we need from pg is Client so we can de
 let DB_URI;
 
 // If we're running in test "mode", use our test db
-if (provess.env.NODE_ENV === "test") {
+if (process.env.NODE_ENV === "test") {
     DB_URI = "postgresql:///data_company_db_test";
 } else {
     DB_URI = "postgresl:///data_company_db";
