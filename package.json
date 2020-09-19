@@ -1,0 +1,16 @@
+{
+  "name": "data-company",
+  "version": "1.0.0",
+  "description": "low-level connection between database and application using only a js library and sql queries",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "pg",
+    "postgresql"
+  ],
+  "author": "Jorge Weiss",
+  "license": "ISC"
+}
