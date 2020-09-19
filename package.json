@@ -12,5 +12,9 @@
     "postgresql"
   ],
   "author": "Jorge Weiss",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.3.3"
+  }
 }
