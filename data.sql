@@ -1,13 +1,15 @@
-DROP DATABASE IF EXISTS data_company_db;
-DROP DATABASE IF EXISTS data_company_db_test;
+-- DROP DATABASE IF EXISTS data_company_db;
+-- DROP DATABASE IF EXISTS data_company_db_test;
 
-CREATE DATABASE data_company_db;
-CREATE DATABASE data_company_db_test;
+-- CREATE DATABASE data_company_db;
+-- CREATE DATABASE data_company_db_test;
 
-\c data_company_db_test;
+-- \c data_company_db_test;
 
 DROP TABLE IF EXISTS invoices;
 DROP TABLE IF EXISTS companies;
+DROP TABLE IF EXISTS industries;
+DROP TABLE IF EXISTS industries_companies;
 
 CREATE TABLE companies (
     code text PRIMARY KEY,
@@ -23,6 +25,16 @@ CREATE TABLE invoices (
     add_date date DEFAULT CURRENT_DATE NOT NULL,
     paid_date date,
     CONSTRAINT invoices_amt_check CHECK ((amt > (0)::double precision))
+);
+
+CREATE TABLE industries (
+  code text PRIMARY KEY,
+  industry text NOT NULL
+);
+
+CREATE TABLE industries_companies (
+  industry_code text NOT NULL REFERENCES industries ON DELETE CASCADE,
+  company_code text NOT NULL REFERENCES companies ON DELETE CASCADE
 );
 
 INSERT INTO companies
@@ -35,37 +47,68 @@ INSERT INTO invoices (comp_code, amt, paid, paid_date)
          ('apple', 300, true, '2018-01-01'),
          ('ibm', 400, false, null);
 
+INSERT INTO industries
+  VALUES ('acct', 'Accounting'),
+         ('tech', 'Technology'),
+         ('hosp', 'Hospitality'),
+         ('auto', 'Automobile');
 
+INSERT INTO industries_companies
+  VALUES ('tech', 'apple'),
+         ('tech', 'ibm');
 
-\c data_company_db;
+-- \c data_company_db;
 
-DROP TABLE IF EXISTS invoices;
-DROP TABLE IF EXISTS companies;
+-- DROP TABLE IF EXISTS invoices;
+-- DROP TABLE IF EXISTS companies;
+-- DROP TABLE IF EXISTS industries;
+-- DROP TABLE IF EXISTS industries_companies;
 
-CREATE TABLE companies (
-    code text PRIMARY KEY,
-    name text NOT NULL UNIQUE,
-    description text
-);
+-- CREATE TABLE companies (
+--     code text PRIMARY KEY,
+--     name text NOT NULL UNIQUE,
+--     description text
+-- );
 
-CREATE TABLE invoices (
-    id serial PRIMARY KEY,
-    comp_code text NOT NULL REFERENCES companies ON DELETE CASCADE,
-    amt float NOT NULL,
-    paid boolean DEFAULT false NOT NULL,
-    add_date date DEFAULT CURRENT_DATE NOT NULL,
-    paid_date date,
-    CONSTRAINT invoices_amt_check CHECK ((amt > (0)::double precision))
-);
+-- CREATE TABLE invoices (
+--     id serial PRIMARY KEY,
+--     comp_code text NOT NULL REFERENCES companies ON DELETE CASCADE,
+--     amt float NOT NULL,
+--     paid boolean DEFAULT false NOT NULL,
+--     add_date date DEFAULT CURRENT_DATE NOT NULL,
+--     paid_date date,
+--     CONSTRAINT invoices_amt_check CHECK ((amt > (0)::double precision))
+-- );
 
-INSERT INTO companies
-  VALUES ('apple', 'Apple Computer', 'Maker of OSX.'),
-         ('ibm', 'IBM', 'Big blue.');
+-- CREATE TABLE industries (
+--   code text PRIMARY KEY,
+--   industry text NOT NULL
+-- )
 
-INSERT INTO invoices (comp_Code, amt, paid, paid_date)
-  VALUES ('apple', 100, false, null),
-         ('apple', 200, false, null),
-         ('apple', 300, true, '2018-01-01'),
-         ('ibm', 400, false, null);
+-- CREATE TABLE industries_companies (
+--   industry_code text NOT NULL REFERENCES industries ON DELETE CASCADE,
+--   company_code text NOT NULL REFERENCES companies ON DELETE CASCADE
+-- )
+
+-- INSERT INTO companies
+--   VALUES ('apple', 'Apple Computer', 'Maker of OSX.'),
+--          ('ibm', 'IBM', 'Big blue.');
+
+-- INSERT INTO invoices (comp_code, amt, paid, paid_date)
+--   VALUES ('apple', 100, false, null),
+--          ('apple', 200, false, null),
+--          ('apple', 300, true, '2018-01-01'),
+--          ('ibm', 400, false, null);
+
+-- INSERT INTO industries
+--   VALUES ('acct', 'Accounting'),
+--          ('tech', 'Technology'),
+--          ('hosp', 'Hospitality'),
+--          ('auto', 'Automobile')
+
+-- INSERT INTO industries_companies
+--   VALUES ('tech', 'apple'),
+--          ('tech', 'ibm')
+
 
 

@@ -44,9 +44,10 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
     try {
-        const {amt} = req.body;
+        const {amt, paid} = req.body;
         const {id} = req.params;
-        const results = await db.query(`UPDATE invoices SET amt=$1 WHERE id=$2 RETURNING *`, [amt, id]);
+        console.log(paid);
+        const results = await db.query(`UPDATE invoices SET amt=$1 paid=$2 WHERE id=$3 RETURNING *`, [amt, paid, id]);
         if (results.rows.length==0) {
             throw new ExpressError(`Could not update invoice with id: ${id}`, 404);
         }
